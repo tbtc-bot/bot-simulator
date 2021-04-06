@@ -58,9 +58,12 @@ class MarketEngine:
 
     ##### PUBLIC METHODS
     def startSimulation(self, df):
-        for i in range(1, len(df['Timestamp'])):
+        nPoints = len(df['Timestamp'])
+        for i in range(1, nPoints):
+            if i % 10000 == 0:
+                util.logger.info(f"{round(i/nPoints*100, 2)} %")
             self.timestamp = df['Timestamp'][i]
-            self.markPrice = df['Open'][i]
+            self.markPrice = df['Price'][i]
             ordersToExecute = self._getOrdersToExecute(self.markPrice)
 
             if len(ordersToExecute) > 0:

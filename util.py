@@ -77,7 +77,7 @@ def fileExists(filePath) -> bool:
     return Path(filePath).is_file()
 
 
-def loadResults(filePath) -> pd.DataFrame:
+def loadDataset(filePath) -> pd.DataFrame:
     return pd.read_csv(filePath, parse_dates=['Date'], index_col='Date')
 
 
@@ -86,8 +86,8 @@ def getSymbolData(filePath) -> pd.DataFrame:
         logger.info(f"Downloading dataset to: {filePath} ...")
         downloadSymbolData(filePath)
 
-    logger.info(f"Dataset loaded")
-    return loadResults(filePath)
+    logger.info(f"Loading dataset ...")
+    return loadDataset(filePath)
 
 
 def downloadSymbolData(filePath) -> None:
@@ -102,11 +102,7 @@ def downloadSymbolData(filePath) -> None:
             timestamp = int(klines[i][0] / 1000)
             dataDict['Date'] = datetime.fromtimestamp(timestamp)
             dataDict['Timestamp'] = timestamp
-            dataDict['Open'] = float(klines[i][1])
-            dataDict['High'] = float(klines[i][2])
-            dataDict['Low'] = float(klines[i][3])
-            dataDict['Close'] = float(klines[i][4])
-            dataDict['Volume'] = float(klines[i][5])
+            dataDict['Price'] = float(klines[i][1])
             dataDictList.append(dataDict)
 
         df = pd.DataFrame(dataDictList)

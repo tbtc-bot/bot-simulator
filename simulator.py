@@ -28,13 +28,13 @@ class Simulator:
 
         if util.fileExists(self.resultsFilePath):
             util.logger.info(f"Results for this simulation are already available: {self.resultsFilePath}")
-            self.results = util.loadResults(self.resultsFilePath)
+            self.results = util.loadDataset(self.resultsFilePath)
         else:
-            symbolDataFilePath = self.mainDataFolder + self.bot.symbol + '_candles.csv'
+            symbolDataFilePath = self.mainDataFolder + self.bot.symbol + '_prices.csv'
             symbolData = util.getSymbolData(symbolDataFilePath)
 
             util.logger.info("Simulation started")
-            self.bot.createInitialGrid(startPrice=symbolData['Open'][0])
+            self.bot.createInitialGrid(startPrice=symbolData['Price'][0])
             self.market.startSimulation(symbolData)
 
             self.results = self.market.getResults()

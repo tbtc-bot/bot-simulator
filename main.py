@@ -7,11 +7,10 @@ import time
 import analysis
 
 
+# v1.0.0
 # TODO only long/short strategies
 # TODO think of other relevant statistical plots
 # TODO get data from futures api instead of spot
-# TODO progress bar
-# TODO GUI
 
 
 def main():
@@ -32,7 +31,7 @@ def main():
     simulator.startSimulation()
 
     analysis.plotMetrics(simulator.results, str(simulator.bot), simulator.mainDataFolder + f'{simulator.bot}.png')
-    # analysis.plotDistributions(simulator.results)
+    analysis.plotDistributions(simulator.results, simulator.mainDataFolder + f'{simulator.bot}_distr.png')
     plt.show()
 
 
