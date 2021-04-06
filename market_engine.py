@@ -9,13 +9,14 @@ class Order:
     """
     staticId = 0
 
-    def __init__(self, price, size, gridNumber, type):
+    def __init__(self, price, size, gridNumber, type, market):
         self.id = Order.staticId
         Order.staticId += 1
         self.price = round(price,2)
         self.size = round(size,3)
         self.gridNumber = gridNumber
         self.type = type # Type: '' = normal, 'TP' = take profit, 'SL' = stop loss.
+        self.market = market
         self.fee = MarketEngine.ORDER_FEE_PERCENTAGE/100 * self.price * abs(self.size) # fee associated to the order
 
 
@@ -76,8 +77,8 @@ class MarketEngine:
 
         util.logger.info("Simulation done")
 
-    def addOrder(self, price, size, gridNumber, type=''):
-        order = Order(price, size, gridNumber, type)
+    def addOrder(self, price, size, gridNumber, type='', market=False):
+        order = Order(price, size, gridNumber, type, market)
         self.openOrders[order.id] = order
 
     def cancelOrder(self, order):
@@ -153,7 +154,13 @@ class MarketEngine:
         takeProfitOrder = None
         stopLossOrder = None
         for order in self.openOrders.values():
-            # define buy and sell conditions
+            # if market order, execute at mark price
+            if order.market:
+                order.price = markPrice
+                ordersToExecute.append(order)
+                continue
+
+            # if limit order, define buy and sell conditions
             if order.type=='SL':
                 if (order.size < 0 and markPrice <= order.price) or (order.size > 0 and markPrice >= order.price):
                     stopLossOrder = order

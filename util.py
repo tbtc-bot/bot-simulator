@@ -36,9 +36,10 @@ def parseConfigFile(filePath) -> bool:
     try:
         root = ET.parse(filePath).getroot()
 
-        config.SYMBOL = root.find('Symbol').text.strip()
+        config.SYMBOL = root.find('Symbol').text.strip().upper()
         config.INITIAL_EQUITY = float(root.find('InitialEquity').text.strip())
         config.LEVERAGE = int(root.find('Leverage').text.strip())
+        config.BUY_SELL = root.find('BuySell').text.strip().upper()
 
         startDateNode = root.find('StartDate')
         startYear = int(startDateNode.find('StartYear').text.strip())
@@ -62,6 +63,7 @@ def parseConfigFile(filePath) -> bool:
         config.SF = float(strategyNode.find('SF').text.strip())
         config.OS = float(strategyNode.find('OS').text.strip())
         config.OF = float(strategyNode.find('OF').text.strip())
+        config.TS = float(strategyNode.find('TS').text.strip())
         config.SL = strategyNode.find('SL').text
         if config.SL is not None:
             config.SL = float(config.SL.strip())

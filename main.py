@@ -26,7 +26,14 @@ def main():
     else:
         return
 
-    bot = bots.Bot(config.SYMBOL, GO=config.GO, GS=config.GS, SF=config.SF, OS=config.OS, OF=config.OF, SL=config.SL)
+    if config.BUY_SELL == 'BOTH':
+        bot = bots.BotBoth(config.SYMBOL, GO=config.GO, GS=config.GS, SF=config.SF, OS=config.OS, OF=config.OF, TS = config.TS, SL=config.SL)
+    elif config.BUY_SELL == 'LONG':
+        bot = bots.BotLong(config.SYMBOL, GO=config.GO, GS=config.GS, SF=config.SF, OS=config.OS, OF=config.OF, TS = config.TS, SL=config.SL)
+    else:
+        util.logger.error(f"{config.BUY_SELL} is not a valid strategy")
+        return
+
     simulator = Simulator(config.INITIAL_EQUITY, config.START_DATE, config.END_DATE, bot)
     simulator.startSimulation()
 

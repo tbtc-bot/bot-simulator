@@ -8,6 +8,7 @@ CONFIGURATION_FILE = 'configuration.xml'
 SYMBOL = None
 INITIAL_EQUITY = None
 LEVERAGE = None
+BUY_SELL = None
 
 # time window
 START_DATE = None
@@ -19,4 +20,5 @@ GS = None
 SF = None
 OS = None
 OF = None
+TS = None
 SL = None
