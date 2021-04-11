@@ -19,6 +19,9 @@ class Order:
         self.market = market
         self.fee = MarketEngine.ORDER_FEE_PERCENTAGE/100 * self.price * abs(self.size) # fee associated to the order
 
+    def __str__(self):
+        return f"Price: {self.price}, size: {self.size}, gridNumber: {self.gridNumber}, type: {self.type}, market: {self.market}"
+
 
 class Position:
     """ The open position is defined by an entry price and a position size.
@@ -27,6 +30,9 @@ class Position:
     def __init__(self, entryPrice=None, size=0):
         self.entryPrice = entryPrice
         self.size = size
+
+    def __str__(self):
+        return f"Entry price: {self.entryPrice}, size: {self.size}"
 
     def update(self, order):
         self.entryPrice = (self.entryPrice * self.size + order.price * order.size) / (self.size + order.size)
@@ -66,10 +72,13 @@ class MarketEngine:
             self.timestamp = df['Timestamp'][i]
             self.markPrice = df['Price'][i]
             ordersToExecute = self._getOrdersToExecute(self.markPrice)
-
             if len(ordersToExecute) > 0:
+                # print(datetime.fromtimestamp(self.timestamp))
+                # self.printGrid()
                 for order in ordersToExecute:
+                    util.logger.debug(f"Position before order: {self.position}")
                     self._executeOrder(order)
+                    util.logger.debug(f"Position after order: {self.position}")
                     self._addDataframeRow(order)
             else:
                 self.grossProfit = None
@@ -103,6 +112,7 @@ class MarketEngine:
 
     ##### PRIVATE METHODS
     def _executeOrder(self, order):
+        util.logger.debug(f"[{datetime.fromtimestamp(self.timestamp)}] Mark price: {self.markPrice}. Execute order: {order}")
         if self.position.entryPrice is None:
             self.position = Position(order.price, order.size)
             self.grossProfit = None
@@ -118,7 +128,7 @@ class MarketEngine:
             else:
                 # increase position
                 if self.position.size * order.size <= 0:
-                    util.logger.error(f"{self.timestamp} Position should be increasing")
+                    util.logger.error(f"[{datetime.fromtimestamp(self.timestamp)}] Position should be increasing")
                 self.position.update(order)
                 self.grossProfit = None
                 self.netProfit = None

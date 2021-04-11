@@ -8,14 +8,14 @@ import analysis
 
 
 # v1.0.0
-# TODO only long/short strategies
+# TODO fix profit distribution with stop loss
 # TODO think of other relevant statistical plots
 # TODO get data from futures api instead of spot
 
 
 def main():
     if util.loadConfigFile():
-        info = "Loaded configuration:"
+        info = "\nLoaded configuration:"
         info += f"\nSymbol: {config.SYMBOL}"
         info += f"\nInitial Equity: {config.INITIAL_EQUITY}"
         info += f"\nLeverage: {config.LEVERAGE}"

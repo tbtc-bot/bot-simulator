@@ -10,13 +10,20 @@ from binance.client import Client
 ##### LOGGER
 logger = logging.getLogger("Log")
 logger.setLevel(logging.DEBUG)
+
+# console
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-# formatter = logging.Formatter('[%(asctime)s] [%(levelname)s] %(message)s')
-formatter = logging.Formatter('[%(asctime)s] [%(levelname)s] %(filename)s at line %(lineno)s:  %(message)s')
+ch.setLevel(logging.INFO)
+formatter = logging.Formatter('[%(asctime)s] [%(levelname)s] %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
+# file
+fh = logging.FileHandler('debug.log')
+fh.setLevel(logging.DEBUG)
+formatter = logging.Formatter('[%(asctime)s] [%(levelname)s] %(filename)s at line %(lineno)s:  %(message)s')
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 
 
 ##### UTILITIES FUNCTIONS
