@@ -174,18 +174,8 @@ class BotLong(Bot):
         self.addOrderCallback(startPrice, s0, 1, market=True)
 
     def orderExecutedCallback(self, order, position):
-
-        # Entry price is None and is not a TP: create first grid
         if position.entryPrice is None:
             self.createInitialGrid(order.price)
-
-        # # Entry price is None and is a TP: add market order
-        # if position.entryPrice is None and order.type == 'TP':
-        #     s0 = (self.getEquityCallback() / order.price) * (self.OS / 100)
-        #     self.addOrderCallback(order.price, s0, 1, market=True)
-        #     # self._createBuyGrid(order.price)
-        #     return
-
         else:
             self._setTakeProfit(position)
 

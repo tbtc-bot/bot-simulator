@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<Configuration>
+	<Symbol>LTCUSDT</Symbol>
+
+	<InitialEquity>1000</InitialEquity>
+
+	<Leverage>20</Leverage>
+
+	<BuySell>LONG</BuySell>
+
+	<StartDate>
+		<StartYear>2021</StartYear>
+		<StartMonth>3</StartMonth>
+		<StartDay>1</StartDay>
+		<StartHour>0</StartHour>
+		<StartMinute>0</StartMinute>
+	</StartDate>
+
+	<EndDate>
+		<EndYear>2021</EndYear>
+		<EndMonth>3</EndMonth>
+		<EndDay>29</EndDay>
+		<EndHour>0</EndHour>
+		<EndMinute>0</EndMinute>
+	</EndDate>
+
+	<Strategy>
+		<GO>7</GO>
+		<GS>0.2</GS>
+		<SF>2</SF>
+		<OS>0.8</OS>
+		<OF>2.2</OF>
+		<TS>0.3</TS>
+		<SL></SL>
+	</Strategy>
+</Configuration>
