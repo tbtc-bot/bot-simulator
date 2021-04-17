@@ -183,6 +183,7 @@ class BotLong(Bot):
     ##### PRIVATE METHODS
     def _setTakeProfit(self, position):
         super()._setTakeProfit(position)
+        # TODO cancel previous TP
         takeProfitPrice = position.entryPrice * (1 + self.TS / 100)
         self.addOrderCallback(takeProfitPrice, -position.size, gridNumber=-1, type='TP')
 
