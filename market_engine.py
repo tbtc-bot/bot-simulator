@@ -12,7 +12,7 @@ class Order:
     def __init__(self, price, size, gridNumber, type, market):
         self.id = Order.staticId
         Order.staticId += 1
-        self.price = round(price,2)
+        self.price = price
         self.size = round(size,3)
         self.gridNumber = gridNumber
         self.type = type # Type: '' = normal, 'TP' = take profit, 'SL' = stop loss.
